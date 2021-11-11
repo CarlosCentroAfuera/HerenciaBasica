@@ -7,6 +7,13 @@ fun main() {
     println(guerrero1)
     println(superJefe)
 
+    var listaPersonajes = listOf(guerrero1, superJefe)
+
+    listaPersonajes.forEach {
+        println(it.toString())
+        it.apellido
+    }
+
     do {
         guerrero1.atacar(1,6, superJefe)
         if (superJefe.estaVivo())
@@ -16,10 +23,16 @@ fun main() {
     println(guerrero1)
     println(superJefe)
 
+
+
 }
 
 
-open class Personaje(var nombre: String, var vida: Int){
+abstract class Personaje(var nombre: String, var vida: Int){
+
+    abstract var apellido : String
+
+    abstract fun gritoDeGuerra()
 
     open fun atacar(valorMinimo: Int, valorMaximo:Int, personaje: Personaje) {
         personaje.quitarVida(Random.nextInt(valorMinimo, valorMaximo + 1))
@@ -40,6 +53,14 @@ open class Personaje(var nombre: String, var vida: Int){
 
 class Guerrero(alias : String) : Personaje(alias, 50) {
 
+
+    override var apellido = "Personaje"
+
+    override fun gritoDeGuerra() {
+        println("BUUUUUUUUUUUUUUU")
+    }
+
+
     override fun atacar(valorMinimo: Int, valorMaximo: Int, personaje: Personaje) {
         super.atacar(valorMinimo, valorMaximo, personaje)
         if (!personaje.estaVivo()){
@@ -57,11 +78,23 @@ class Guerrero(alias : String) : Personaje(alias, 50) {
 
 class Minion(alias : String) : Personaje(alias,10) {
 
+    override fun gritoDeGuerra() {
+        println("AHHH")
+    }
+
+    override var apellido = "Minion"
+
 }
 
 class SuperJefe(alias:String) : Personaje(alias, 25) {
 
-    val listaMinions = mutableListOf(Minion("M1"), Minion("M2"), Minion("M3"))
+    override fun gritoDeGuerra() {
+        println("AHHH")
+    }
+
+    override var apellido = "SuperJefazo"
+
+    private val listaMinions = mutableListOf(Minion("M1"), Minion("M2"), Minion("M3"))
 
     override fun quitarVida(dano: Int) {
         if (listaMinions.isNotEmpty()) {
